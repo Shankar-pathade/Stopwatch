@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch</title>
+</head>
+<body>
+    <div class="watch">
+        <div class="time">
+            00 : 00 : 00 : 000
+        </div>
+        <div class="controls">
+            <button id="start">Start</button>
+            <button id="pause">Pause</button>
+            <button id="reset">Reset</button>
+        </div>
+    </div>
+
+    <script>
+        let [miliiseconds, hours, minuits, seconds] = [0, 0, 0, 0];
+
+
+        let timedisplay = document.querySelector('.time');
+
+        let data;
+        document.getElementById('start').addEventListener('click', () => {
+                data = setInterval(startTimer, 10);
+        })
+
+        document.getElementById('pause').addEventListener('click', () => {
+                clearInterval(data);
+        })
+
+        document.getElementById('reset').addEventListener('click', () => {
+                clearInterval(data);
+                [miliiseconds, hours, minuits, seconds] = [0, 0, 0, 0];
+                timedisplay.innerHTML = "00 : 00 : 00 : 000";
+        })
+
+        const startTimer = () => {
+            miliiseconds = miliiseconds + 10;
+            if(miliiseconds == 1000) {
+                miliiseconds = 0;
+                seconds++;
+                if(seconds == 60) {
+                    seconds = 0;
+                    minuits++;
+                    if(minuits == 60) {
+                        minuits = 0;
+                        hours++;
+                    }
+                }
+            }
+            let hrs = hours < 10 ? "0" + hours : hours;
+            let mins = minuits < 10 ? "0" + minuits : minuits;
+            let secs = seconds < 10 ? "0" + seconds : seconds;
+            let mls = miliiseconds < 10 ? "00" + miliiseconds : miliiseconds;
+                      miliiseconds > 100 ? "0" + miliiseconds : miliiseconds;
+            
+            timedisplay.innerHTML = ` ${hrs} : ${mins} : ${secs} : ${mls} `
+        }
+
+    </script>
+</body>
+</html>
